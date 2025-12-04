@@ -1,5 +1,6 @@
 package com.example.redis.service;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,8 +24,15 @@ public class TutorialService {
     return tutorialRepository.findById(id);
   }
   
+  
   public Tutorial save(Tutorial tutorial) {
-	    return tutorialRepository.save(tutorial);
+	   return tutorialRepository.save(tutorial);
+  }
+  
+  @Cacheable("tutorials")
+  public List<Tutorial> findAll() {
+	  doLongRunningTask();
+	    return tutorialRepository.findAll();
 	  }
 
   private void doLongRunningTask() {

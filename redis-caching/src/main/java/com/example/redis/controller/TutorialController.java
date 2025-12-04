@@ -1,5 +1,6 @@
 package com.example.redis.controller;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,4 +35,12 @@ public class TutorialController {
 	  public Tutorial createTutorial(@RequestBody Tutorial tutorial) {
 	    return tutorialService.save(new Tutorial(0, tutorial.getTitle(), tutorial.getDescription(), false));
 	}
+	
+	@GetMapping("/tutorials")
+	  @ResponseStatus(HttpStatus.OK)
+	  public List<Tutorial> getAllTutorials() {
+
+	      return tutorialService.findAll();
+	  
+	  }
 }
