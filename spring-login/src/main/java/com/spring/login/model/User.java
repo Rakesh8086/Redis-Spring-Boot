@@ -34,13 +34,14 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank
+	@Size(max = 20)
 	private String username;
 	@NotBlank
 	@Size(max = 50)
 	@Email
 	private String email;
 	@NotBlank
-	@Size(max = 50)
+	@Size(max = 120) // this is for saving in db, which is encrypted and hence long
 	private String password;
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name = "user_roles", 
