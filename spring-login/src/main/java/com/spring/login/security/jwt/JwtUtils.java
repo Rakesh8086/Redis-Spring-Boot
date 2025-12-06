@@ -51,7 +51,8 @@ public class JwtUtils {
 				.build();
 		return cookie;
 	}
-
+	// used for logout. Clears the existing jwt token and sets it null
+	// jwt token is stored in the user's browser cookies
 	public ResponseCookie getCleanJwtCookie() {
 		ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
 		return cookie;
