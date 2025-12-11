@@ -1,5 +1,6 @@
 package com.flight.bookingapp.controller;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,7 +21,9 @@ import org.springframework.web.servlet.mvc.method.annotation.MvcUriComponentsBui
 
 import com.flight.bookingapp.dto.ResponseMessage;
 import com.flight.bookingapp.entity.FileInfo;
+import com.flight.bookingapp.entity.Flight;
 import com.flight.bookingapp.service.FilesStorageService;
+import com.flight.bookingapp.service.FlightService;
 
 @Controller
 @CrossOrigin("http://localhost:8081")
@@ -28,6 +31,8 @@ public class FilesController {
 
   @Autowired
   FilesStorageService storageService;
+  @Autowired
+  FlightService flightService;
 
   @PostMapping("/upload")
   public ResponseEntity<ResponseMessage> uploadFile(@RequestParam("file") MultipartFile file) {
@@ -62,5 +67,12 @@ public class FilesController {
     Resource file = storageService.load(filename);
     return ResponseEntity.ok()
         .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getFilename() + "\"").body(file);
+  }
+  
+  @PostMapping("/files/{filename:.+}")
+  @ResponseBody
+  public ResponseEntity<List<Flight>> processFile(@PathVariable String filename) throws IOException {
+      List<Flight> invalid = flightService.addFlights(filename);
+      return new ResponseEntity<>(invalid, HttpStatus.OK);
   }
 }

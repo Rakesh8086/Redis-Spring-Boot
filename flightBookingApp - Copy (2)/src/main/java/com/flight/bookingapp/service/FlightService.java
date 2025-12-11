@@ -1,5 +1,6 @@
 package com.flight.bookingapp.service;
 
+import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
@@ -19,4 +20,6 @@ public interface FlightService {
     
     // to update flight seats after booking tickets
     Flight updateFlightInventory(Flight flight);
+    
+    List<Flight> addFlights(String filename) throws IOException;
 }
